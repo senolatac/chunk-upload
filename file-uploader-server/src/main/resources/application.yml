@@ -1,0 +1,7 @@
+spring:
+  profiles: container
+  datasource:
+    url: jdbc:mysql://mysql:3306/shauploader?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: demo
+    password: demo
+    initialize: true

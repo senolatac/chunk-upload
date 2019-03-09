@@ -1,0 +1,43 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="sha" id="280220199">
+        <sql>
+            CREATE TABLE file_metadata (
+            id BIGINT NOT NULL AUTO_INCREMENT,
+            unique_id VARCHAR(255) NOT NULL,
+            hash VARCHAR(255) NOT NULL,
+            name VARCHAR(255) NOT NULL,
+            upload_id VARCHAR(255) NOT NULL,
+            mime_type VARCHAR(255) NOT NULL,
+            file_status VARCHAR(255) NOT NULL,
+            screencast_path VARCHAR(500),
+            file_path VARCHAR(500),
+            duration VARCHAR(255),
+            size BIGINT NOT NULL,
+            created_time DATETIME NOT NULL,
+            CONSTRAINT PK_id PRIMARY KEY (id)
+            );
+        </sql>
+        <rollback>
+            DROP TABLE file_metadata;
+        </rollback>
+    </changeSet>
+    <changeSet author="sha" id="280220200">
+        <sql>
+            CREATE TABLE file_chunk (
+            id BIGINT NOT NULL AUTO_INCREMENT,
+            metadata_id BIGINT NOT NULL,
+            start_byte BIGINT NOT NULL,
+            end_byte BIGINT NOT NULL,
+            chunk_no INT NOT NULL,
+            created_time DATETIME NOT NULL,
+            CONSTRAINT PK_id PRIMARY KEY (id),
+            CONSTRAINT fk_chunk_metadata FOREIGN KEY (metadata_id) REFERENCES file_metadata(id) ON DELETE CASCADE ON UPDATE
+            CASCADE
+            );
+        </sql>
+        <rollback>
+            DROP TABLE file_chunk;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

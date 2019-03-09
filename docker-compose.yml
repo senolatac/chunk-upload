@@ -1,0 +1,19 @@
+version: '3.0'
+services:
+    uploader-mysql:
+        image: mysql:latest
+        environment:
+            - MYSQL_ROOT_PASSWORD=1234
+            - MYSQL_DATABASE=shauploader
+            - MYSQL_USER=demo
+            - MYSQL_PASSWORD=demo
+        ports:
+            - 3306:3306
+    uploader-server:
+        build: ./file-uploader-server
+        command: 
+            - /wait-for-it.sh -t 30 uploader-mysql:3306 -- ./file-uploader-server
+        ports:
+            - 8080:8080
+        links:
+            - uploader-mysql:mysql

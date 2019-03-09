@@ -1,0 +1,74 @@
+
+<table class="mat-elevation-z8 mat-table">
+<tr class="mat-row">
+<th class="mat-header-cell" colspan="4" style="font-weight:900;font-size:16px;">Current Item</th>
+</tr>
+<tr class="mat-row">
+  <th class="mat-header-cell">Speed</th>
+  <th class="mat-header-cell">Size</th>
+  <th class="mat-header-cell">Status</th>
+  <th class="mat-header-cell">Upload</th>
+</tr>
+<tr class="mat-row">
+  <td class="mat-cell" style="text-align:center;">{{(itemState? itemState.speed:'-')}}</td>
+  <td class="mat-cell" style="text-align:center;">{{itemState? itemState.size:'-'}}</td>
+  <td class="mat-cell" style="text-align:center;">{{itemState? itemState.status:'-'}}</td>
+  <td class="mat-cell" style="text-align:center;">
+          <label class="upload-btn">
+            <mat-icon>cloud_upload</mat-icon>
+            <input #file type="file" uploadx  accept="video/*" style="display:none">
+          </label>
+  </td>
+</tr>
+</table>
+  <table class="mat-elevation-z8 mat-table">
+    <tr class="mat-row">
+    <th class="mat-header-cell" colspan="4" style="font-weight:900;font-size:16px;">Progress List</th>
+    </tr>
+    <tr class="mat-row">
+      <th class="mat-header-cell">File Name</th>
+      <th class="mat-header-cell">Progress</th>
+      <th class="mat-header-cell">Status</th>
+      <th class="mat-header-cell">Pause</th>
+    </tr>
+    <tr class="mat-row" *ngFor="let ufile of uploads">
+      <td  class="mat-cell">{{ ufile.name }}</td>
+      <td class="mat-cell">
+        <div class="progress" style="margin-bottom: 0;">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': (ufile.progress?ufile.progress:0) + '%' }">{{ (ufile.progress?ufile.progress:0) }}%</div>
+        </div>
+      </td>
+      <td class="mat-cell" style="text-align:center;">{{ ufile.status }}</td>
+      <td class="mat-cell" style="text-align:center;">
+        <button [disabled]="!ufile.progress || ufile.progress == 100" mat-raised-button color="primary" (click)="pause(ufile)">{{ufile.pause?"Resume":"Pause"}}</button>
+      </td>
+    </tr>
+    <tr *ngIf="!uploads || uploads.length==0"  class="mat-row"><td class="mat-cell" colspan="4">No records yet...</td></tr>
+  </table>
+
+<table class="mat-elevation-z8 mat-table">
+  <tr class="mat-row">
+  <th class="mat-header-cell" colspan="4" style="font-weight:900;font-size:16px;">Completed List</th>
+  </tr>
+  <tr class="mat-row">
+    <th class="mat-header-cell">Screencast</th>
+    <th class="mat-header-cell">File Path</th>
+    <th class="mat-header-cell">File Name</th>
+    <th class="mat-header-cell">Duration</th>
+  </tr>
+  <tr class="mat-row" *ngFor="let ufile of completedList">
+    <td class="mat-cell" style="text-align:center;">
+      <img style="width:200px;" src="{{ displayPath + ufile.encryptScreen }}"/>
+    </td>
+    <td class="mat-cell" style="text-align:center;">
+      <video width="200" controls>
+        <source src="{{ displayPath + ufile.encryptPath }}" type="video/mp4">
+      </video>
+    </td>
+    <td class="mat-cell" style="text-align:center;">{{ ufile.name }}</td>
+    <td class="mat-cell" style="text-align:center;">
+      {{ ufile.duration }}
+    </td>
+  </tr>
+  <tr  class="mat-row" *ngIf="!completedList || completedList.length==0"><td  class="mat-cell" colspan="4">No records yet...</td></tr>
+</table>
