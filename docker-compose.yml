@@ -17,3 +17,7 @@ services:
             - 8080:8080
         links:
             - uploader-mysql:mysql
+    uploader-client:
+        build: ./file-uploader-client
+        ports:
+            - 4200:80
