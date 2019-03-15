@@ -3,7 +3,7 @@
 The application structure is as follows.
 - **file-upload-server** - Microservice implemented using Spring boot. [More info](file-upload-server/README.md)
 - **file-upload-client** - A NodeJs application implemented using Angular 7. This consumes services hosted by file-upload-server.  [More info](file-upload-client/README.md)
-- **docker-compose.yml** - Docker compose file to run file-upload-server in container.
+- **docker-compose.yml** - Docker compose file to run file-upload-server and file-uploader-client in container.
 
 ### Build
 
@@ -23,7 +23,7 @@ $ docker-compose up
 
 NOTE: To run without docker container follow [steps](file-upload-server/README.md) in file-upload-server project.
 
-#### 3) Build and run file-upload-client application
+#### 3) Build and run file-upload-client application (Optional: Docker-compose up will handle everything.)
 
 ```
 $ cd file-upload-client
