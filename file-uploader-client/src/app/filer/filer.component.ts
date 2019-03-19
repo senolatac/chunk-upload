@@ -9,7 +9,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Ufile } from '../ufile';
 import {ParallelHasher} from 'ts-md5/dist/parallel_hasher';
 
-const displayURL = 'http://192.168.0.11:8080/api/displayFile/';
+const displayURL = 'http://localhost:8080/api/displayFile/';
 
 @Component({
   selector: 'app-filer',
