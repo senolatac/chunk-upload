@@ -27,6 +27,22 @@ public class VideoUtil {
         }
     }
 
+    public static FileMetadata getScreenCastFromVideo(String folderPath, String videoPath) throws Exception {
+        FileMetadata fileMetadata = new FileMetadata();
+        FFmpegFrameGrabber g = new FFmpegFrameGrabber(videoPath);
+        g.start();
+        fileMetadata.setDuration(TimeUtil.convertToDuration(g.getLengthInTime() / 1000000L));
+        Frame frame = null;
+        for(int i = 0; i<g.getFrameRate()*4; i++){
+            frame = g.grab();
+        }
+        String fileName = "video-frame.png";
+        fileName = generateFileName(fileName);
+        String prePath = createPrePath(new Date());
+        saveFileToSystem(folderPath, prePath, fileName, new Java2DFrameConverter().convert(frame));
+        return fileMetadata;
+    }
+
     public static String createPrePath(Date date){
         return TimeUtil.extractYear(date) + File.separator + TimeUtil.extractMonth(date) + File.separator + TimeUtil.extractDay(date) + File.separator;
     }

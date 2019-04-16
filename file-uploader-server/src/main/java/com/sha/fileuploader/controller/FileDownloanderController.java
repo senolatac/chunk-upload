@@ -46,4 +46,22 @@ public class FileDownloanderController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
+
+    @GetMapping("/displayFile/{fileName:.+}")
+    public ResponseEntity<Void> displayFile(@PathVariable String filename, HttpServletRequest request,
+                                            HttpServletResponse response){
+        String decryptPath  = EncryptionUtil.decrypt(filename);
+        Resource resource = fileStorageService.loadFileAsResource(decryptPath);
+        String contentType = null;
+        try{
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+        if(contentType == null){
+            contentType = "application/octet-stream";
+        }
+        ServletUtil.sendFile(request, response, decryptPath, contentType);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

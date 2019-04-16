@@ -65,8 +65,8 @@ public class ServletUtil {
         return contentRange;
     }
 
-    public static void sendImage(final HttpServletRequest req, final HttpServletResponse res, final String discName,
-                           final String mimeType) {
+    public static void sendFile(final HttpServletRequest req, final HttpServletResponse res, final String discName,
+                                final String mimeType) {
         OutputStream out = null;
         FileInputStream in = null;
         try {
